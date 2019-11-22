@@ -19,10 +19,10 @@ async function testOsusedStore() {
     console.info('3. current url: ', await driver.getCurrentUrl())
     const emailInput = await driver.findElement(By.id('email'))
     console.info('4. got email input')
-    emailInput.sendKeys('qwe@qwe.com')
+    emailInput.sendKeys('qwe@qwe.com') // todo: extract this hardcoded value, then make a mock data, then signup with it before login
     const passwordInput = await driver.findElement(By.id('password'))
     console.info('5. got password input')
-    passwordInput.sendKeys('qweqweqwe')
+    passwordInput.sendKeys('qweqweqwe') // todo: extract this hardcoded value, then make a mock data, then signup with it before login
     const loginButton = await driver.findElement(By.xpath('//button[@type=\'submit\']'))
     console.info('6. got login button')
     loginButton.click()
@@ -37,7 +37,7 @@ async function testOsusedStore() {
     //TODO: DELETE: delete an item -> check if the item is deleted in the list
 
     //TODO: SEARCH: 1. by category 2. by a keyword
-    
+
     await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
   } finally {
     await driver.quit();

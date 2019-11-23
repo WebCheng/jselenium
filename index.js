@@ -1,14 +1,21 @@
 var chrome = require('selenium-webdriver/chrome');
 chrome.setDefaultService(new chrome.ServiceBuilder(require('chromedriver').path).build());
 const {example} = require('./scenarios/google')
-const { testOsusedStore } = require('./scenarios/osused-store')
+const {testOsusedStore} = require('./scenarios/osused-store')
+const {testOsusedItems} = require('./scenarios/items')
 // function getFunctions() {
 //     ''
 // }
 
 try {
     // example()
-    testOsusedStore().then(e => {console.log(e)}).catch(e => console.error(e))
+    testOsusedStore().then(e => {
+        console.log(e)
+    }).catch(e => console.error(e));
+
+    testOsusedItems().then(e => {
+        console.log(e)
+    }).catch(e => console.error(e));
     // functions = getFunctions()
     // for fname in fucntions:
     //     const fn = new function(fname);

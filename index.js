@@ -1,19 +1,18 @@
-var chrome = require('selenium-webdriver/chrome');
-chrome.setDefaultService(new chrome.ServiceBuilder(require('chromedriver').path).build());
+const {Builder} = require('selenium-webdriver');
 const {signUp, login} = require('./scenarios/users')
-const {testOsusedItems} = require('./scenarios/items')
+// const {testOsusedItems} = require('./scenarios/items')
 
-try {
-    signUp().then(e => {
-        console.log(e)
-        login().then(e => {
-            console.log(e)
-        }).catch(e => console.error(e));
-    }).catch(e => console.error(e));
+const test = async () => {
+    const driver = await new Builder().forBrowser('chrome').build();
 
-    testOsusedItems().then(e => {
-        console.log(e)
-    }).catch(e => console.error(e));
-} catch (e) {
-    console.log(e)
-}
+    try {
+        await signUp(driver)
+        await login(driver)
+
+        // await testOsusedItems()
+    } catch (e) {
+        console.error('Error: ', e)
+    }
+};
+
+test();

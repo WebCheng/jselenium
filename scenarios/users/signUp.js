@@ -1,16 +1,12 @@
-const {Builder, By, Key, until} = require('selenium-webdriver');
+const {By, until} = require('selenium-webdriver');
 const { URL, mockNewUser } = require('./__mock__')
 const { sleep } = require('../../common/utils')
 
-async function signUp() {
-  const driver = await new Builder().forBrowser('chrome').build();
-  try {
-    console.info('----------- SIGN UP -----------')
-    // Loading home page
+async function signUp(driver) {
+    console.info('----------- SIGN UP - Started... -----------')
     await driver.get(URL);
     console.info('loaded url: ', await driver.getCurrentUrl())
 
-    //TODO: SIGN UP:
     await driver.findElement(By.xpath('//span[text()=\'Login\']')).click()
     console.info('1. login clicked')
     await driver.wait(until.urlIs(`${URL}/login`));
@@ -36,9 +32,7 @@ async function signUp() {
 
     await driver.wait(until.urlIs(`${URL}/login`));
     console.info('8. current url: ', await driver.getCurrentUrl())
-  } finally {
-    await driver.quit();
-  }
+    console.info('----------- SIGN UP - Done -----------')
 }
 
 module.exports = {

@@ -1,10 +1,8 @@
-const {Builder, By, Key, until} = require('selenium-webdriver');
+const {By, until} = require('selenium-webdriver');
 const { URL, mockNewUser } = require('./__mock__')
 
-async function login() {
-  const driver = await new Builder().forBrowser('chrome').build();
-  try {
-    console.info('----------- LOGIN -----------')
+async function login(driver) {
+    console.info('----------- LOGIN - Started... -----------')
     // Loading home page
     await driver.get(URL);
     console.info('loaded url: ', await driver.getCurrentUrl())
@@ -23,11 +21,7 @@ async function login() {
 
     driver.wait(until.urlIs(`${URL}/items`));
     console.info('5. current url: ', await driver.getCurrentUrl())
-
-    return driver
-  } finally {
-    await driver.quit();
-  }
+    console.info('----------- LOGIN - Done -----------')
 }
 
 module.exports = {

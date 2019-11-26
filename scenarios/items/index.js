@@ -1,5 +1,6 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
-const {URL, mockNewUser, mockNewItem} = require('./__mock__')
+const {URL, mockNewUser, mockNewItem} = require('./__mock__');
+const { sleep } = require('../../common/utils')
 
 async function testOsusedItems() {
     const driver = await new Builder().forBrowser('chrome').build();
@@ -37,15 +38,6 @@ async function testOsusedItems() {
 
     } finally {
         await driver.quit();
-    }
-}
-
-function sleep(milliseconds) {
-    let start = new Date().getTime();
-    for (let i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds) {
-            break;
-        }
     }
 }
 

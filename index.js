@@ -1,7 +1,7 @@
 var chrome = require('selenium-webdriver/chrome');
 chrome.setDefaultService(new chrome.ServiceBuilder(require('chromedriver').path).build());
 const {example} = require('./scenarios/google')
-const {testOsusedStore} = require('./scenarios/osused-store')
+const {signUp, login} = require('./scenarios/users')
 const {testOsusedItems} = require('./scenarios/items')
 // function getFunctions() {
 //     ''
@@ -9,8 +9,11 @@ const {testOsusedItems} = require('./scenarios/items')
 
 try {
     // example()
-    testOsusedStore().then(e => {
+    signUp().then(e => {
         console.log(e)
+        login().then(e => {
+            console.log(e)
+        }).catch(e => console.error(e));
     }).catch(e => console.error(e));
 
     testOsusedItems().then(e => {

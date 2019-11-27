@@ -8,7 +8,7 @@ const mockNewUser = {
 }
 
 const mockNewItem = {
-    name: 'mock book 1',
+    name: 'aaaaa mock book 1',
     category: 'book',
     location: 'location 1',
     price: "100",

@@ -1,40 +1,32 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const {URL, mockNewUser, mockNewItem} = require('./__mock__');
-const { sleep } = require('../../common/utils')
+const {sleep} = require('../../common/utils');
+const {login} = require('../users/login');
+const {searchItem} = require('./seachItems');
+const {addItem} = require('./addItem');
+const {deleteItem} = require('./deleteItem');
 
-async function testOsusedItems() {
-    const driver = await new Builder().forBrowser('chrome').build();
+async function items(driver) {
     try {
         // Loading home page
-        await driver.get(URL);
-        console.info('loaded url: ', await driver.getCurrentUrl())
-
-        await driver.findElement(By.xpath('//span[text()=\'Login\']')).click();
-        console.info('1. login clicked');
-        await driver.wait(until.urlIs(`${URL}/login`));
-        console.info('2. current url: ', await driver.getCurrentUrl());
-        await driver.findElement(By.id('email')).sendKeys(mockNewUser.email);
-        await driver.findElement(By.id('password')).sendKeys(mockNewUser.password);
-        await driver.findElement(By.xpath('//button[@type=\'submit\']')).click();
-        sleep(1000);
+        await login(driver);
+        // Add Item
+        sleep(500);
+        console.info('1. Click add item button: ', await driver.getCurrentUrl());
         await driver.findElement(By.id('AddItem')).click();
-
         sleep(1000);
-        console.info('3. current url: ', await driver.getCurrentUrl());
-        await driver.findElement(By.id('title')).sendKeys(mockNewItem.name);
-        await driver.findElement(By.id('location')).sendKeys(mockNewItem.location);
-        await driver.findElement(By.id('description')).sendKeys(mockNewItem.description);
-        await driver.findElement(By.id('price')).sendKeys(mockNewItem.price);
-        await driver.findElement(By.id('category')).sendKeys(mockNewItem.category);
-        await driver.findElement(By.xpath('//button[@type=\'submit\']')).click();
-
-        sleep(2000);
-        await driver.findElement(By.id("select-select-category")).click()
-        await driver.findElement(By.css(".MuiListItem-root:nth-child(2)")).click()
+        console.info('2. Current url: ', await driver.getCurrentUrl());
+        console.info('3. Set item information', await driver.getCurrentUrl());
+        await addItem(driver);
         sleep(2000);
 
+        console.info('4. Search an new item', await driver.getCurrentUrl());
+        await searchItem(driver);
+        sleep(500);
 
-        //TODO: DELETE: delete an item -> check if the item is deleted in the list
+        console.info('5. Delete an new item', await driver.getCurrentUrl());
+        await deleteItem(driver);
+        sleep(5000);
 
     } finally {
         await driver.quit();
@@ -42,5 +34,5 @@ async function testOsusedItems() {
 }
 
 module.exports = {
-    testOsusedItems
+    items
 };
